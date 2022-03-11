@@ -26,10 +26,10 @@ export const Home = () => {
                 </article>
                 <article>
                     <div>
-                        Please use caution!
+                        Please use <span className="red-text-color">caution</span>!
                     </div>
                     <div>
-                        Files are not tested for malware.
+                        Files are <span className="red-text-color">not</span> tested for <span className="red-text-color">malware</span>.
                     </div>
                 </article>
             </section>

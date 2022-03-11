@@ -80,7 +80,8 @@ body {
   grid-template-areas: "header header header header header" "main main main main main" "footer footer footer footer footer";
   flex-direction: column;
   background-color: black;
-  --primary-text-color: white;
+  --primary-text-color: #FFFFFF;
+  --red-color: #FF0000;
   color: var(--primary-text-color);
 }
 
@@ -94,13 +95,25 @@ body {
   padding: 6rem;
   width: 100%;
   display: grid;
-  grid-template-columns: 0.75fr 1fr 0.75fr 0.75fr 0.75fr;
-  grid-template-areas: "..... ....... file file ....." "..... content file file ....." "..... ....... file file .....";
+  grid-template-columns: 0.75fr 1fr 1.2fr 0.75fr;
+  grid-template-areas: "..... ....... file ....." "..... content file ....." "..... ....... file .....";
   gap: 1rem;
+}
+
+.red-text-color {
+  color: var(--red-color);
 }
 
 .main-description {
   grid-area: content;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 1rem;
+}
+.main-description article p, .main-description article h2 {
+  padding: 0px;
+  margin: 0px;
 }
 
 .file-container {
@@ -109,6 +122,34 @@ body {
   height: 100%;
   background: linear-gradient(180deg, #C4C4C4 0%, rgba(196, 196, 196, 0) 100%, rgba(196, 196, 196, 0) 100%);
   border-radius: 50px 50px 0px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.file-container .file-icon-background {
+  width: 65%;
+  height: 80%;
+  background: #C4C4C4;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+}
+.file-container .file-icon-background .download-icon {
+  fill: red;
+  stroke: red;
+}
+.file-container .file-icon-background:disabled {
+  filter: blur(0.75rem);
+  cursor: not-allowed;
+}
+.file-container .tos-container {
+  display: flex;
+}
+.file-container .tos-container a {
+  color: #6da9b3;
 }
 
 .site-footer {
