@@ -82,6 +82,7 @@ body {
   background-color: black;
   --primary-text-color: #FFFFFF;
   --red-color: #FF0000;
+  --tos-link-color: #6da9b3;
   color: var(--primary-text-color);
 }
 
@@ -131,15 +132,15 @@ body {
 }
 .file-container .file-icon-background {
   width: 65%;
-  height: 80%;
-  background: #C4C4C4;
+  height: 75%;
+  --primary-background-color: #C4C4C4;
+  background: var(--primary-background-color);
   border-radius: 50%;
   border: none;
   cursor: pointer;
 }
-.file-container .file-icon-background .download-icon {
-  fill: red;
-  stroke: red;
+.file-container .file-icon-background svg .download-icon {
+  fill: var(--red-color);
 }
 .file-container .file-icon-background:disabled {
   filter: blur(0.75rem);
@@ -149,7 +150,7 @@ body {
   display: flex;
 }
 .file-container .tos-container a {
-  color: #6da9b3;
+  color: var(--tos-link-color);
 }
 
 .site-footer {

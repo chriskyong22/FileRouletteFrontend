@@ -137,6 +137,7 @@ body {
     // colors 
     --primary-text-color: #FFFFFF;
     --red-color: #FF0000;
+    --tos-link-color: #6da9b3;
     color: var(--primary-text-color);
 }
 
@@ -193,14 +194,16 @@ body {
 
     .file-icon-background {
         width: 65%;
-        height: 80%;
-        background: #C4C4C4;
+        height: 75%;
+        --primary-background-color: #C4C4C4;
+        background: var(--primary-background-color);
         border-radius: 50%;
         border: none;
         cursor: pointer;
-        .download-icon {
-            fill: red;
-            stroke: red;
+        svg {
+            .download-icon {
+                fill: var(--red-color);
+            }
         }
     }
 
@@ -215,7 +218,7 @@ body {
         input[type="checkbox"] {
         }
         a {
-            color: #6da9b3;
+            color: var(--tos-link-color);
         }
     }
 
