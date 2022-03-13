@@ -1,11 +1,11 @@
 import axios from "axios";
 const BASE_URL = "http://localhost:3001/";
 
-export const uploadFile = (file: File) => {
+export const uploadFile = async (file: File): Promise<string> => {
 
     const formData = new FormData();
     formData.append("file", file);
-    axios.post(`${BASE_URL}upload/`, formData,  {
+    return await axios.post(`${BASE_URL}upload/`, formData,  {
         headers: {
             'Content-Type': 'multipart/form-data'
         }, 
@@ -22,7 +22,9 @@ export const uploadFile = (file: File) => {
         a.download = fileName;
         a.click();
         window.URL.revokeObjectURL(url);
+        return fileName;
     }).catch((error) => {
         console.error(error);
+        return "Something went wrong, please try again";
     })
 }

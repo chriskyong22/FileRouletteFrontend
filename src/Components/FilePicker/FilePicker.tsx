@@ -4,11 +4,14 @@ import { uploadFile } from "../../Services/API";
 export const FilePicker = () => {
 
     const [checkedTOS, setCheckedTOS] = useState(true);
+    const [fileName, setFileName] = useState("");
     const [status, setStatus] = useState<'idle' | 'uploading' | 'rate'>('idle');
+    const [errorMessage, setErrorMessage] = useState("");
     const test = (event: any) => {
         event.stopPropagation();
         console.log("test");
         setStatus('idle');
+        setFileName("");
     }
 
     const [file, setFile] = useState<null | File>(null);
@@ -18,7 +21,7 @@ export const FilePicker = () => {
             return (
                 <div className="file">
                     <h2>
-                        You got FILE_NAME!
+                        You got {fileName.replaceAll("\"", "")}!
                     </h2>
                     <h3 aria-labelledby="rate-section">
                         Rate it!
@@ -80,14 +83,20 @@ export const FilePicker = () => {
         let filePicker = document.createElement('input');
         filePicker.setAttribute('type', 'file');
         filePicker.click();
-        filePicker.onchange = () => {
+        filePicker.onchange = async () => {
             console.log(filePicker.files);
             if (filePicker.files) {
                 const file = filePicker.files[0];
                 if (file.size < MB) { 
-                    uploadFile(file);
-                    console.log(file);
-                    setStatus('rate');
+                    try {
+                        setStatus('uploading');
+                        let fileName = await uploadFile(file);
+                        setFileName(fileName);
+                        setStatus('rate');
+                    } catch (error: any) {
+                        setStatus('idle');
+                        setErrorMessage(error);
+                    }
                 }
             }
         }
