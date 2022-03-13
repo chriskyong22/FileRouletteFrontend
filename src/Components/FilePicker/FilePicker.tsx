@@ -1,16 +1,20 @@
 import react, { useState } from "react"
+import { uploadFile } from "../../Services/API";
 
 export const FilePicker = () => {
 
     const [checkedTOS, setCheckedTOS] = useState(true);
-    const [toggleDownload, setToggleDownload] = useState(false);
+    const [status, setStatus] = useState<'idle' | 'uploading' | 'rate'>('idle');
     const test = (event: any) => {
         event.stopPropagation();
         console.log("test");
-        setToggleDownload(!toggleDownload);
+        setStatus('idle');
     }
+
+    const [file, setFile] = useState<null | File>(null);
+
     const renderOption = () => {
-        if (toggleDownload) {
+        if (status === 'rate') {
             return (
                 <div className="file">
                     <h2>
@@ -21,10 +25,10 @@ export const FilePicker = () => {
                     </h3>
                     <section id="rate-section">
                         <button aria-label="Rate Positively" className="h3 positive">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg> 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg> 
                         </button>
                         <button aria-label="Rate Negatively" className="h3 negative">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-thumbs-down"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-thumbs-down"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
                         </button>
                     </section>
                     <button onClick={test}>
@@ -32,7 +36,7 @@ export const FilePicker = () => {
                     </button>
                 </div>
             )
-        } else {
+        } else if (status === 'idle') {
             return (
                 <>
                     <button aria-description={"You must agree to the terms of service before uploading and downloading files."} 
@@ -72,7 +76,21 @@ export const FilePicker = () => {
     }
 
     const uploadAndDownloadFile = (event: react.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        setToggleDownload((toggleDownload) => !toggleDownload);
+        const MB = 1 * 1024 * 1024;
+        let filePicker = document.createElement('input');
+        filePicker.setAttribute('type', 'file');
+        filePicker.click();
+        filePicker.onchange = () => {
+            console.log(filePicker.files);
+            if (filePicker.files) {
+                const file = filePicker.files[0];
+                if (file.size < MB) { 
+                    uploadFile(file);
+                    console.log(file);
+                    setStatus('rate');
+                }
+            }
+        }
         console.log("Running upload");
     }
 
