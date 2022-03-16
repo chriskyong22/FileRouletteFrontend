@@ -96,11 +96,34 @@ body {
   padding: 6rem;
   width: 100%;
   display: grid;
-  grid-template-columns: 0.75fr 1fr 1.2fr 0.75fr;
+  grid-template-columns: 0.75fr 1fr 1.5fr 0.75fr;
   grid-template-areas: "..... ....... file ....." "..... content file ....." "..... ....... file .....";
   gap: 1rem;
 }
 
+@media screen and (max-width: 1400px) {
+  .main {
+    grid-template-columns: 0.25fr 1fr 1fr 0.25fr;
+    grid-template-areas: "..... ....... file file" "..... content file file" "..... ....... file file";
+  }
+}
+@media screen and (max-width: 1100px) {
+  .main {
+    grid-template-columns: 0.25fr 1fr 1fr 0.25fr;
+    grid-template-areas: "..... content content ....." "..... file file ....." "..... file file .....";
+  }
+}
+@media screen and (max-width: 600px) {
+  .main {
+    grid-template-columns: 1fr;
+    grid-template-areas: "content" "content" "file" "file";
+  }
+
+  .file-icon-background {
+    width: 100%;
+    height: 100%;
+  }
+}
 .red-text-color {
   color: var(--red-color);
 }
@@ -128,11 +151,10 @@ body {
   gap: 1.5rem;
   justify-content: center;
   align-items: center;
-  position: relative;
 }
 .file-container .file-icon-background {
   width: 65%;
-  height: 75%;
+  height: 65%;
   --primary-background-color: #C4C4C4;
   background: var(--primary-background-color);
   border-radius: 50%;
@@ -148,7 +170,7 @@ body {
   fill: var(--red-color);
 }
 .file-container .file-icon-background svg text {
-  font-size: 2rem;
+  font-size: 3rem;
   fill: var(--red-color);
 }
 .file-container .file-icon-background:disabled {
